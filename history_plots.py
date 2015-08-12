@@ -18,7 +18,7 @@ def open_msg(msg):
 
 def read_files():
     msgs = []
-    for day in range(5, 12):
+    for day in range(5, 15):
         fname = 'Parrulaituri-201508{:02d}.txt'.format(day)
         try:
             f = urllib2.urlopen('{}/{}'.format(www, fname))
@@ -63,7 +63,7 @@ def plot_all_to_files(dfs, sensors, bgimg):
     idx = dfs[i].index
     s = dfs[i]['Illuminance log10']
     plot_data(idx, s, '{}\nIlluminance'.format(sensors[i]),
-              ylabel='lx', fname='illuminance.png', bgimg=bgimg)
+              ylabel='lx', fname='plots/illuminance.png', bgimg=bgimg)
 
     i = 1
     idx = dfs[i].index
@@ -71,30 +71,30 @@ def plot_all_to_files(dfs, sensors, bgimg):
     cond = (s >= 0)
     s = s[cond]
     idx = idx[cond]
-    plot_data(idx, s, '{}\nRain drops'.format(sensors[i]), fname='rain_drops.png', bgimg=bgimg)
+    plot_data(idx, s, '{}\nRain drops'.format(sensors[i]), fname='plots/rain_drops.png', bgimg=bgimg)
 
     idx = dfs[i].index
     s = (4095.0 - dfs[i]['Soil moisture']) / 4095.0 * 100.0
     cond = (s >= 0)
     s = s[cond]
     idx = idx[cond]
-    plot_data(idx, s, '{}\nSoil moisture'.format(sensors[i]), fname='soil_moisture.png',
+    plot_data(idx, s, '{}\nSoil moisture'.format(sensors[i]), fname='plots/soil_moisture.png',
               bgimg=bgimg)
 
     i = 2
     idx = dfs[i].index
     s = dfs[i].icol(0)
-    plot_data(idx, s, '{}\nTemperature'.format(sensors[i]), 'Celsius', 'temperature1.png',
+    plot_data(idx, s, '{}\nTemperature'.format(sensors[i]), 'Celsius', 'plots/temperature1.png',
               bgimg=bgimg)
 
     i = 3
     idx = dfs[i].index
     s = dfs[i]['Air pressure']
-    plot_data(idx, s, '{}\nAir pressure'.format(sensors[i]), 'mbar', 'air_pressure.png',
+    plot_data(idx, s, '{}\nAir pressure'.format(sensors[i]), 'mbar', 'plots/air_pressure.png',
               bgimg=bgimg)
 
     s = dfs[i]['Temperature']
-    plot_data(idx, s, '{}\nTemperature'.format(sensors[i]), 'Celsius', 'temperature2.png',
+    plot_data(idx, s, '{}\nTemperature'.format(sensors[i]), 'Celsius', 'plots/temperature2.png',
               bgimg=bgimg)
 
 
