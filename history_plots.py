@@ -39,7 +39,7 @@ def plot_axis(spec, idx, s, title, ylabel=None, bgimg=None):
     ax = plt.subplot(spec)
     ax.set_title(title)
     ax.plot_date(idx.to_pydatetime(), s, '-')
-    ax.xaxis.set_major_locator(dates.HourLocator(byhour=(0, 4, 8, 12, 16, 20)))
+    ax.xaxis.set_major_locator(dates.HourLocator(byhour=(0, 6, 12, 18)))
     ax.xaxis.set_major_formatter(dates.DateFormatter('%H'))
     ax.xaxis.set_minor_locator(dates.DayLocator())
     ax.xaxis.set_minor_formatter(dates.DateFormatter('\n%d-%m-%Y'))
@@ -61,7 +61,7 @@ def plot_all_to_pdf(dfs, sensors, bgimg, fname):
     idx = dfs[i].index
     s = dfs[i]['Illuminance log10']
     plot_axis(323, idx, s, 'Illuminance',
-              ylabel='lx', bgimg=bgimg)
+              ylabel='', bgimg=bgimg)
 
     i = 1
     idx = dfs[i].index
