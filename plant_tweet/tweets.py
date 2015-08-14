@@ -5,12 +5,28 @@ from websocket import create_connection
 import json
 import time
 import logging
+import random
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-limits = [20, 30, 40]
-tweetlist = [u'On liian kylmä', u'Nyt on hyvä', u'Turhan lämmin', u'Ihan liian kuuma']
+limits = [410]  # 0.9
+tweetlist = [
+    [u'Hanat auki...ja pian #kiitos!',
+     u'Kuiva meininki!',
+     u'Anna huikka!',
+     u'Is this some kind of a #desert? #climatechange needed!',
+     u'Heikottaa...',
+     u'Tipaton tammikuu? Elokuu?'
+     u'Kaipaan sitä sateista alkukesää!'],
+    [u'Getting high...on water!',
+     u'Something is FLOWing...is it water?',
+     u'Nyt helpottaa!',
+     u'Kiitos!',
+     u'Se siitä kuivasta kaudesta!',
+     u"I'm singing in the rain!"]]
+# [u'On liian kylmä', u'Nyt on hyvä', u'Turhan lämmin', u'Ihan liian kuuma']
+
 TWEEW_INTERVAL = 10.0
 
 def get_twitter_client():
@@ -45,7 +61,9 @@ def get_tweet(value, current_state, last_tweet_time):
         if value > limit:
             state += 1
     if state != current_state and (time.time() - last_tweet_time) > TWEEW_INTERVAL:
-        return (tweetlist[state] + u'. Lämpötila: {}'.format(value), state)
+        oneof = tweetlist[state]
+        tweet = oneof[int(random.random() * len(oneof))]
+        return (tweet + u' Arvo: {}'.format(value), state)
     else:
         return (None, current_state)
 
@@ -58,9 +76,9 @@ def main():
 
     while True:
         try:
-            # data = get_socket_data(ws, 'Analog Sensor Data', 'Soil moisture')
+            data = get_socket_data(ws, 'Parrulaituri', 'Analog Sensor Data', 'Soil moisture')
             # data = get_socket_data(ws, 'Light Sensor Data', 'Illuminance')
-            data = get_socket_data(ws, 'Parrulaituri', 'Barometer Sensor Data', 'Temperature')
+            # data = get_socket_data(ws, 'Parrulaituri', 'Barometer Sensor Data', 'Temperature')
             value = data.get(u'value')
             if value is None:
                 continue
